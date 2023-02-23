@@ -73,6 +73,54 @@ adjustHealthBars(selectMaxLife);
 
 function writeToLog(ev, val, MonsterHealth, playerHealth) {
   let logEntries;
+  // let logEntries = {
+  //   event: ev,
+  //   value: val,
+  //   finalPlayerHealth: playerHealth,
+  //   finalMonsterHealth: MonsterHealth,
+  // };
+  // switch (ev) {
+  //   case LOG_PLAYER_ATTACK:
+  //     logEntries.target = 'MONSTER';
+  //     break;
+  //   case LOG_PLAYER_STRONG_ATTACK:
+  //     logEntries = {
+  //       event: ev,
+  //       value: val,
+  //       target: 'MONSTER',
+  //       finalPlayerHealth: playerHealth,
+  //       finalMonsterHealth: MonsterHealth,
+  //     };
+  //     break;
+  //   case LOG_MONSTER_ATTACK:
+  //     logEntries = {
+  //       event: ev,
+  //       value: val,
+  //       target: 'PLAYER',
+  //       finalPlayerHealth: playerHealth,
+  //       finalMonsterHealth: MonsterHealth,
+  //     };
+  //     break;
+  //   case LOG_HEAL_ATTACK:
+  //     logEntries = {
+  //       event: ev,
+  //       value: val,
+  //       target: 'PLAYER',
+  //       finalPlayerHealth: playerHealth,
+  //       finalMonsterHealth: MonsterHealth,
+  //     };
+  //     break;
+  //   case LOG_GAME_OVER:
+  //     logEntries = {
+  //       event: ev,
+  //       value: val,
+  //       finalPlayerHealth: playerHealth,
+  //       finalMonsterHealth: MonsterHealth,
+  //     };
+  //     break;
+  //   default:
+  //     logEntries = {};
+  // }
   if (ev === LOG_PLAYER_ATTACK || ev === LOG_PLAYER_STRONG_ATTACK) {
     logEntries = {
       event: ev,
@@ -210,7 +258,17 @@ function onHeal() {
   endDisplay();
 }
 function onLog() {
-  console.log(battleLog);
+  // for (let i = 0; i < battleLog.length; i++) {
+  //   console.log(battleLog[i]);
+  // }
+  let i = 0;
+  for (const logEnt of battleLog) {
+    console.log(`#${i}`);
+    for (const key in logEnt) {
+      console.log(`${key} : ${logEnt[key]}`);
+    }
+    i++;
+  }
 }
 attackBtn.addEventListener('click', onAttack);
 strongAttackBtn.addEventListener('click', onStrongAttack);
