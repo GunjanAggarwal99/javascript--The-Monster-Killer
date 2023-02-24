@@ -58,13 +58,26 @@ const LOG_PLAYER_STRONG_ATTACK = 'PLAYER_STRONG_ATTACK';
 const LOG_MONSTER_ATTACK = 'MONSTER_ATTACK';
 const LOG_HEAL_ATTACK = 'HEAL_ATTACK';
 const LOG_GAME_OVER = 'GAME_OVER';
-
-const enertedMaxLife = prompt('Please Enter Max Life', '100');
-let selectMaxLife = parseInt(enertedMaxLife);
 let battleLog = [];
-if (isNaN(selectMaxLife) || selectMaxLife <= 0) {
-  selectMaxLife = 100;
+let lastLogged;
+
+function enterMaxLife() {
+  const enertedMaxLife = prompt('Please Enter Max Life', '100');
+  const parseValue = parseInt(enertedMaxLife);
+  if (isNaN(parseValue) || parseValue <= 0) {
+    throw { message: 'Invalid max life ,please enter number to continue!' };
+  }
+  return parseValue;
 }
+let selectMaxLife;
+try {
+  selectMaxLife = enterMaxLife();
+} catch (error) {
+  console.log(error);
+  selectMaxLife = 100;
+  alert('you eneter wrong input , therfore it is taking 100 as default');
+}
+
 let currentMonsterLife = selectMaxLife;
 let currentPlayerHealth = selectMaxLife;
 let hasBonusLife = true;
@@ -258,14 +271,30 @@ function onHeal() {
   endDisplay();
 }
 function onLog() {
+  let j = 0;
+  outerWhile: do {
+    console.log('outer', j);
+    innerWhile: for (let k = 0; k < 5; k++) {
+      if (k === 3) {
+        // break outerWhile;
+        continue;
+      }
+      console.log('inner', k);
+    }
+    j++;
+  } while (j < 3);
   // for (let i = 0; i < battleLog.length; i++) {
   //   console.log(battleLog[i]);
   // }
   let i = 0;
   for (const logEnt of battleLog) {
-    console.log(`#${i}`);
-    for (const key in logEnt) {
-      console.log(`${key} : ${logEnt[key]}`);
+    if ((!lastLogged && lastLogged !== 0) || lastLogged < i) {
+      console.log(`#${i}`);
+      for (const key in logEnt) {
+        console.log(`${key} : ${logEnt[key]}`);
+      }
+      lastLogged = i;
+      break;
     }
     i++;
   }
